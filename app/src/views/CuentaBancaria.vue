@@ -30,14 +30,14 @@
             </v-row>
             <v-row>
               <v-col>
-                <v-text-field v-model="numCuenta" :rules="[fieldRules.required,fieldRules.validarCuenta,fieldRules.soloNumeros]" label="NÚMERO CUENTA" required></v-text-field>
+                <v-text-field v-model="numCuenta" :rules="[fieldRules.required,fieldRules.validarCuenta]" label="NÚMERO CUENTA" required></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col>
                 <v-text-field
                   v-model="cci"
-                  :rules="[fieldRules.required,fieldRules.validarCCI,fieldRules.soloNumeros]"
+                  :rules="[fieldRules.required,fieldRules.validarCCI]"
                   label="CCI"
                   required
                 ></v-text-field>
@@ -102,10 +102,7 @@ export default {
         required: (v) => !!v || "Campo requerido",
         validarCCI : (v) => v.length == 20 || "CCI incorrecto",
         validarCuenta: (v) => v.length > 10 && v.length < 16 || "Cuenta incorrecta",
-        soloNumeros: (v) => {
-            const pattern = /^[0-9]$/;
-            return pattern.test(v) || "Solo numeros";
-        }
+
       },
       headers: [
         { text: "Número", value: "correlativo" },
