@@ -22,8 +22,8 @@ class CuentaBancariaController extends Controller
 from cuentabancaria cb
 inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
         */
-        $cuentas = DB::table('cuentabancaria as cb')->select('cb.Codigo','ef.siglas','cb.CCI','cb.numeroCuenta','cb.tipoMoneda','cb.nombre','cb.vigencia')
-                                    ->join('entidadfinanciera as ef','ef.codigo','=','cb.codigoEntidadFinanciera')
+        $cuentas = DB::table('cuentabancaria as cb')->select('cb.Codigo','ef.Siglas','cb.CCI','cb.NumeroCuenta','cb.TipoMoneda','cb.Nombre','cb.Vigencia')
+                                    ->join('entidadBancaria as ef','ef.Codigo','=','cb.CodigoEntidadBancaria')
                                     ->get();
         return response()->json($cuentas);
     }
@@ -39,12 +39,12 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
     public function store(Request $request)
     {
         $cuenta =  new CuentaBancaria();
-        $cuenta->codigoEmpresa = $request->codEmpresa;
-        $cuenta->codigoEntidadFinanciera = $request->codEntidad;
+        $cuenta->CodigoEmpresa = $request->codEmpresa;
+        $cuenta->CodigoEntidadBancaria = $request->codEntidad;
         $cuenta->CCI = $request->cci;
-        $cuenta->numeroCuenta = $request->numCuenta;
-        $cuenta->tipoMoneda = $request->tipoMoneda;
-        $cuenta->nombre = $request->nombre;
+        $cuenta->NumeroCuenta = $request->numCuenta;
+        $cuenta->TipoMoneda = $request->tipoMoneda;
+        $cuenta->Nombre = $request->nombre;
         $cuenta->save();
         return response()->json($cuenta,202);
 
@@ -54,12 +54,12 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
     public function update(Request $request, $id)
     {
         $cuenta = CuentaBancaria::findOrFail($id);
-        $cuenta->codigoEmpresa = $request->codEmpresa;
-        $cuenta->codigoEntidadFinanciera = $request->codEntidad;
+        $cuenta->CodigoEmpresa = $request->codEmpresa;
+        $cuenta->CodigoEntidadBancaria = $request->codEntidad;
         $cuenta->CCI = $request->cci;
-        $cuenta->numeroCuenta = $request->numCuenta;
-        $cuenta->tipoMoneda = $request->tipoMoneda;
-        $cuenta->nombre = $request->nombre;
+        $cuenta->NumeroCuenta = $request->numCuenta;
+        $cuenta->TipoMoneda = $request->tipoMoneda;
+        $cuenta->Nombre = $request->nombre;
         $cuenta->save();
         return response()->json($cuenta,202);
     }
@@ -73,7 +73,7 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
     public function destroy($id)
     {
         $cuenta = CuentaBancaria::findOrFail($id);
-        $cuenta->vigencia = $cuenta->vigencia == 1 ? 0 : 1;
+        $cuenta->Vigencia = $cuenta->Vigencia == 1 ? 0 : 1;
         $cuenta->save();
        return response()->json($cuenta,202);
     }

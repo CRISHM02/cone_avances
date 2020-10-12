@@ -101,14 +101,14 @@ export default {
       fieldRules: {
         required: (v) => !!v || "Campo requerido",
         validarCCI : (v) => v.length == 20 || "CCI incorrecto",
-        validarCuenta: (v) => v.length > 10 && v.length < 16 || "Cuenta incorrecta",
+        validarCuenta: (v) => v.length > 10 && v.length < 16 || "Cuenta Incorrecta",
 
       },
       headers: [
         { text: "Número", value: "correlativo" },
-        { text: "Nombre", value: "nombre" },
-        { text: "Entidad", value: "siglas" },
-        { text: "N°. Cuenta", value: "numeroCuenta" },   
+        { text: "Nombre", value: "Nombre" },
+        { text: "Entidad", value: "Siglas" },
+        { text: "Número de Cuenta", value: "NumeroCuenta" },   
         { text: "CCI", value: "CCI" },
              
         { text: "Acciones", value: "actions", sortable: false },
@@ -128,7 +128,7 @@ export default {
       entidades : [],
       monedas : [
           {value: 'S', text:"Soles"},
-          {value: 'D', text: "Dolares"}
+          {value: 'D', text: "Dólares"}
         ],
       codEmpresa: 0,
       codEntidad: 0,
@@ -232,18 +232,18 @@ export default {
       this.edit = true;
       this.CodigoEdit = cuenta.Codigo;
       this.codEmpresa = cuenta.CodigoEmpresa;
-      this.codEntidad = cuenta.CodigoEntidadFinanciera;
+      this.codEntidad = cuenta.CodigoEntidadBancaria;
       this.cci = cuenta.CCI;
-      this.numCuenta = cuenta.numeroCuenta;
-      this.tipoMoneda = cuenta.tipoMoneda;
-      this.nombre = cuenta.nombre;
+      this.numCuenta = cuenta.NumeroCuenta;
+      this.tipoMoneda = cuenta.TipoMoneda;
+      this.nombre = cuenta.Nombre;
       this.dialog = true;
     },
 
 
     eliminarCuenta(cuenta) {
       patch("cuentasbancarias/" + cuenta.Codigo).then((data) => {
-        if(data.vigencia == 1){
+        if(data.Vigencia == 1){
           Swal.fire({
             position: "top-center",
             title: "Sistema",
@@ -256,7 +256,7 @@ export default {
           Swal.fire({
             position: "top-center",
             title: "Sistema",
-            text: "Cuenta Bancaria Inahilitada con exito ",
+            text: "Cuenta Bancaria Inhailitada con exito ",
             icon: "success",
             confirmButtonText: "Ok",
             timer: 2500,
@@ -270,7 +270,7 @@ export default {
 
     get("entidades").then((response) => {
         response.forEach((entidad) => {
-            this.entidades.push({ text: entidad.siglas, value: entidad.Codigo });
+            this.entidades.push({ text: entidad.Siglas, value: entidad.Codigo });
         });
     }).catch((data)=>{
       console.log(data);

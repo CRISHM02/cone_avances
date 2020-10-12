@@ -16,7 +16,7 @@ class EntidadFinancieraController extends Controller
     public function index()
     {
 
-        $entidades = EntidadFinanciera::select('Codigo','razonSocial','siglas')->where('vigencia','=',1)->get();
+        $entidades = EntidadFinanciera::select('Codigo','RazonSocial','Siglas')->where('Vigencia','=',1)->get();
 
         return response()->json($entidades,202);
     }

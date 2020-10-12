@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class EntidadFinanciera extends Model
 {
-    protected $table = "EntidadFinanciera";
+    protected $table = "entidadBancaria";
     protected $primaryKey = 'Codigo';
     public $timestamps = false;
     protected $fillable = [
         'Codigo',
-        'razonSocial',
-        'siglas',
-        'vigencia'];
+        'RazonSocial',
+        'Siglas',
+        'Vigencia'];
 }

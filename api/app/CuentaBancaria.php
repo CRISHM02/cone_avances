@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class CuentaBancaria extends Model
 {
-    protected $table = "CuentaBancaria";
-    protected $primaryKey = 'codigo';
+    protected $table = "cuentabancaria";
+    protected $primaryKey = 'Codigo';
     public $timestamps = false;
     protected $fillable = [
-        'codigo',
-        'codigoEmpresa',
-        'codigoEntidadFinanciera',
+        'Codigo',
+        'CodigoEmpresa',
+        'CodigoEntidadBancaria',
         'CCI',
-        'numeroCuenta',
-        'tipoMoneda',
-        'nombre',
-        'vigencia'
+        'NumeroCuenta',
+        'TipoMoneda',
+        'Nombre',
+        'Vigencia'
     ];
 }

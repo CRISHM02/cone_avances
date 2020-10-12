@@ -42,7 +42,7 @@
               v-for="option in options"
               :key="option.name + item[headers[0].value]"
               class="mr-2"
-              :color = "item.vigencia == 0 ? 'red darken-2' : 'green darken-2'"
+              :color = "item.Vigencia == 0 ? 'red darken-2' : 'green darken-2'"
               @click="option.function(item)"
               >{{ option.icon }}</v-icon
             >
