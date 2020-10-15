@@ -30,12 +30,11 @@ Route::delete('empresa/{id}', 'empresaController@eliminar')->middleware('token')
 Route::patch('empresa/{id}', 'empresaController@cambiarEstado')->middleware('token');
 // *********************************************************
 // CRUD DE ENTIDAD FINANCIERA
-Route::get('entidades','EntidadFinancieraController@index')->middleware('token');
+Route::get('entidades','EntidadFinancieraController@listar')->middleware('token');
 
 // CRUD DE CUENTA BANCARIA
 
-Route::get('cuentasbancarias','CuentaBancariaController@index')->middleware('token');
-
-Route::post('cuentasbancarias','CuentaBancariaController@store')->middleware('token');
-Route::put('cuentasbancarias/{id}','CuentaBancariaController@update')->middleware('token');
-Route::patch('cuentasbancarias/{id}','CuentaBancariaController@destroy')->middleware('token');
+Route::get('cuentasbancarias','CuentaBancariaController@listar')->middleware('token');
+Route::post('cuentasbancarias','CuentaBancariaController@registrar')->middleware('token');
+Route::put('cuentasbancarias/{id}','CuentaBancariaController@actualizar')->middleware('token');
+Route::patch('cuentasbancarias/{id}','CuentaBancariaController@cambiarVigencia')->middleware('token');

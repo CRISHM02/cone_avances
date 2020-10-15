@@ -14,7 +14,7 @@ class CuentaBancariaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listar()
     {
 
         /*
@@ -22,7 +22,7 @@ class CuentaBancariaController extends Controller
 from cuentabancaria cb
 inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
         */
-        $cuentas = DB::table('cuentabancaria as cb')->select('cb.Codigo','ef.Siglas','cb.CCI','cb.NumeroCuenta','cb.TipoMoneda','cb.Nombre','cb.Vigencia')
+        $cuentas = DB::table('cuentabancaria as cb')->select('cb.Codigo','ef.Siglas','cb.CCI','cb.NumeroCuenta','cb.CodigoEntidadBancaria','cb.TipoMoneda','cb.Nombre','cb.Vigencia')
                                     ->join('entidadBancaria as ef','ef.Codigo','=','cb.CodigoEntidadBancaria')
                                     ->get();
         return response()->json($cuentas);
@@ -36,7 +36,7 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function registrar(Request $request)
     {
         $cuenta =  new CuentaBancaria();
         $cuenta->CodigoEmpresa = $request->codEmpresa;
@@ -51,7 +51,7 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
     }
 
     
-    public function update(Request $request, $id)
+    public function actualizar(Request $request, $id)
     {
         $cuenta = CuentaBancaria::findOrFail($id);
         $cuenta->CodigoEmpresa = $request->codEmpresa;
@@ -70,7 +70,7 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function cambiarVigencia($id)
     {
         $cuenta = CuentaBancaria::findOrFail($id);
         $cuenta->Vigencia = $cuenta->Vigencia == 1 ? 0 : 1;

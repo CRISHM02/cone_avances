@@ -13,7 +13,7 @@ class EntidadFinancieraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listar()
     {
 
         $entidades = EntidadFinanciera::select('Codigo','RazonSocial','Siglas')->where('Vigencia','=',1)->get();

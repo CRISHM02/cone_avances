@@ -105,7 +105,7 @@ export default {
 
       },
       headers: [
-        { text: "Número", value: "correlativo" },
+        { text: "N°", value: "correlativo" },
         { text: "Nombre", value: "Nombre" },
         { text: "Entidad", value: "Siglas" },
         { text: "Número de Cuenta", value: "NumeroCuenta" },   
@@ -116,12 +116,12 @@ export default {
       options: [
         {
           name: "Editar",
-          icon: "mdi-pencil",
+          icon: "mdi-border-color",
           function: this.verCuentaBancaria,
         },
         {
           name: "InHabilitar",
-          icon: "mdi-delete-forever",
+          icon: "mdi-checkbox-marked-circle-outline",
           function: this.eliminarCuenta,
         },
       ],
@@ -139,9 +139,12 @@ export default {
       CodigoEdit: null,
     };
   },
+
   methods: {
     abrirModal() {
-      this.dialog = true;
+      this.limpiar();
+      this.dialog = true;     
+      
     },
     reset () {
         this.$refs.form.reset()
@@ -158,7 +161,7 @@ export default {
       this.nombre= "";
       this.CodigoEdit = null;
       this.edit = false;
-      this.reset();
+      //this.reset();
 
     },
 
@@ -187,7 +190,7 @@ export default {
           Swal.fire({
             position: "top-center",
             title: "Sistema",
-            text: "Cuenta Bancaria Registrada !",
+            text: "Cuenta bancaria registrada !",
             icon: "success",
             confirmButtonText: "Ok",
             timer: 2500,
@@ -198,7 +201,7 @@ export default {
           this.limpiar();
         })
         .catch(() => {
-          Toast.fire("No se Registro Cuenta Bancaria ", "", "error");
+          Toast.fire("No se registró cuenta bancaria ", "", "error");
           this.saveLoading = false;
         });
     },
@@ -210,7 +213,7 @@ export default {
           Swal.fire({
             position: "top-center",
             title: "Sistema",
-            text: "Cuenta Bancaria actualizada ",
+            text: "Cuenta bancaria actualizada !",
             icon: "success",
             confirmButtonText: "Ok",
             timer: 2500,
@@ -222,13 +225,13 @@ export default {
           this.limpiar();
         })
         .catch(() => {
-          Toast.fire("No se Actualizo la Cuenta Bancaria", "", "error");
+          Toast.fire("No se actualizó la cuenta bancaria", "", "error");
           this.saveLoading = false;
         });
     },
 
     verCuentaBancaria(cuenta) {
-      
+      console.log(cuenta);
       this.edit = true;
       this.CodigoEdit = cuenta.Codigo;
       this.codEmpresa = cuenta.CodigoEmpresa;
@@ -247,7 +250,7 @@ export default {
           Swal.fire({
             position: "top-center",
             title: "Sistema",
-            text: "Cuenta Bancaria Habilitada con exito",
+            text: "Cuenta bancaria habilitada con éxito",
             icon: "success",
             confirmButtonText: "Ok",
             timer: 2500,
@@ -256,7 +259,7 @@ export default {
           Swal.fire({
             position: "top-center",
             title: "Sistema",
-            text: "Cuenta Bancaria Inhailitada con exito ",
+            text: "Cuenta bancaria inhailitada con éxito ",
             icon: "success",
             confirmButtonText: "Ok",
             timer: 2500,
@@ -266,8 +269,9 @@ export default {
       });
     },
   },
+  
   created() {
-
+    
     get("entidades").then((response) => {
         response.forEach((entidad) => {
             this.entidades.push({ text: entidad.Siglas, value: entidad.Codigo });
