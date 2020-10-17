@@ -30,7 +30,7 @@ Route::delete('empresa/{id}', 'empresaController@eliminar')->middleware('token')
 Route::patch('empresa/{id}', 'empresaController@cambiarEstado')->middleware('token');
 // *********************************************************
 // CRUD DE ENTIDAD FINANCIERA
-Route::get('entidades','EntidadFinancieraController@listar')->middleware('token');
+Route::get('entidades','EntidadBancariaController@listarVigentes')->middleware('token');
 
 // CRUD DE CUENTA BANCARIA
 

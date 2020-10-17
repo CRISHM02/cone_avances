@@ -1,40 +1,53 @@
 <template>
   <v-content>
     <v-row class="pa-5 align-center">
-      <v-col cols="11">
-        <h2 class="font-weight-regular text-center">Cuentas Bancarias</h2>
+      <v-col cols="1">&nbsp;</v-col>
+      <v-col cols="1">
+        <v-btn
+            color="blue"
+            @click="abrirModal"
+            class="mx-2"
+            fab
+            large
+            dark
+          >
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="10">
+        <h2 class="font-weight-bold text-center">Cuentas Bancarias</h2>
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" persistent max-width="60vw">
       <v-card>
-        <v-card-title>
-          <span v-if="edit" class="headline">Editar Cuenta Bancaria</span>
-          <span v-else class="headline">Nueva Cuenta Bancaria</span>
+        <v-card-title class="headline indigo darken-4"> 
+          <span v-if="edit" class="headline" style="color:white;">Editar Cuenta Bancaria</span>
+          <span v-else class="headline" style="color:white;">Nueva Cuenta Bancaria</span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
-              <v-col>
+              <v-col cols="5">
                 <v-select
                     v-model="codEntidad"
                     :items="entidades"
                     :rules="[fieldRules.required]"
-                    label="ENTIDAD FINANCIERA"
+                    label="Entidad Bancaria"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
-                <v-text-field v-model="nombre" label="NOMBRE"></v-text-field>
+              <v-col cols="5">
+                <v-text-field v-model="nombre" label="Nombre"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
-                <v-text-field v-model="numCuenta" :rules="[fieldRules.required,fieldRules.validarCuenta]" label="NÚMERO CUENTA" required></v-text-field>
+              <v-col cols="5">
+                <v-text-field v-model="numCuenta" :rules="[fieldRules.required,fieldRules.validarCuenta]" label="Número Cuenta" required></v-text-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col cols="5">
                 <v-text-field
                   v-model="cci"
                   :rules="[fieldRules.required,fieldRules.validarCCI]"
@@ -45,12 +58,12 @@
             </v-row>
             
             <v-row>
-              <v-col>
+              <v-col cols="5">
                 <v-select
                     v-model="tipoMoneda"
                     :items="monedas"
                     :rules="[fieldRules.required]"
-                    label="MONEDA"
+                    label="Moneda"
                 ></v-select>
               </v-col>
             </v-row>
@@ -59,11 +72,11 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">Cancelar</v-btn>
+          <v-btn color="indigo darken-4" text @click="dialog = false">Cancelar</v-btn>
           <v-btn
             :loading="saveLoading"
             :disabled="saveLoading"
-            color="primary"
+            color="indigo darken-4"
             class="ma-2 white--text"
             depressed
             @mousedown="Validar"
@@ -76,7 +89,6 @@
           :headers="headers"
           :options="options"
           :withOptions="true"
-          :register = "abrirModal"
           ref="cuentasTable"
           entity="cuentasbancarias"
         />
@@ -105,13 +117,13 @@ export default {
 
       },
       headers: [
-        { text: "N°", value: "correlativo" },
-        { text: "Nombre", value: "Nombre" },
-        { text: "Entidad", value: "Siglas" },
-        { text: "Número de Cuenta", value: "NumeroCuenta" },   
-        { text: "CCI", value: "CCI" },
+        { text: "N°", value: "correlativo", sortable: false, class:'light blue darken-4 white--text'  },
+        { text: "Nombre", value: "Nombre", sortable: false, class:'light blue darken-4 white--text'  },
+        { text: "Entidad", value: "Siglas", sortable: false, class:'light blue darken-4 white--text'  },
+        { text: "Número de Cuenta", value: "NumeroCuenta", sortable: false, class:'light blue darken-4 white--text'  },   
+        { text: "CCI", value: "CCI", sortable: false, class:'light blue darken-4 white--text'  },
              
-        { text: "Acciones", value: "actions", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false, class:'light blue darken-4 white--text' },
       ],
       options: [
         {

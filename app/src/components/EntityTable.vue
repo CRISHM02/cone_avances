@@ -11,25 +11,15 @@
     <v-col cols="11">
       <v-card>
         <v-card-title>
-          <v-btn
-            color="primary"
-            v-if="register"
-            @click="register"
-            class="mx-2"
-            fab
-            small
-            dark
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
+          
           <v-spacer></v-spacer>
-          <v-text-field
+          <!--<v-text-field
             v-model="search"
             append-icon="mdi-magnify"
             label=""
             single-line
             hide-details
-          ></v-text-field>
+          ></v-text-field>-->
         </v-card-title>
         <v-data-table
           :loading="tableLoading"
@@ -58,7 +48,7 @@
 <script>
 import { get } from "../api/api";
 export default {
-  props: ["entity", "headers", "options", "withOptions" ,"register"],
+  props: ["entity", "headers", "options", "withOptions"],
   data() {
     return {
       search: "",

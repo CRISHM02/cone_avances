@@ -34,18 +34,6 @@ class empresaController extends Controller
 
     public function registrar(Request $request)
     {
-        $validacion = Validator::make($request->all(), [
-            'RazonSocial' => 'required|max:100',
-            'RUC' => 'required|unique:empresa|max:11',
-            'Correo' => 'required|max:100',
-        ], [
-            'unique' => ':attribute ya se encuentra registrado',
-            'required' => ':attribute es obligatorio',
-            'max' => ':attribute llego al limite de letras'
-        ]);
-        if ($validacion->fails()) {
-            return response()->json($validacion->errors()->first(), 400);
-        }
         $empresa = new empresa();
 
         $empresa->RazonSocial = $request->get('RazonSocial');
@@ -70,18 +58,6 @@ class empresaController extends Controller
 
     public function actualizar(Request $request, $id)
     {
-        $validacion = Validator::make($request->all(), [
-            'RazonSocial' => 'required|max:100',
-            'RUC' => 'required|max:11',
-            'Facebook' => 'max:100',
-            'Instagram' => 'max:100',
-            'Youtube' => 'max:100',
-            'Whatsapp' => 'max:100',
-            'Correo' => 'required|max:100',
-        ]);
-        if ($validacion->fails()) {
-            return response()->json($validacion, 400);
-        }
         $empresa = empresa::findOrFail($id);
         $empresa->RazonSocial = $request->get('RazonSocial');
         $empresa->RUC = $request->get('RUC');

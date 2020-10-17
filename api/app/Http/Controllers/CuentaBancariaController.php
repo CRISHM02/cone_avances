@@ -20,7 +20,7 @@ class CuentaBancariaController extends Controller
         /*
         SELECT cb.nombre,ef.siglas,cb.numeroCuenta,cb.CCI
 from cuentabancaria cb
-inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
+inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
         */
         $cuentas = DB::table('cuentabancaria as cb')->select('cb.Codigo','ef.Siglas','cb.CCI','cb.NumeroCuenta','cb.CodigoEntidadBancaria','cb.TipoMoneda','cb.Nombre','cb.Vigencia')
                                     ->join('entidadBancaria as ef','ef.Codigo','=','cb.CodigoEntidadBancaria')
@@ -38,6 +38,7 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
      */
     public function registrar(Request $request)
     {
+
         $cuenta =  new CuentaBancaria();
         $cuenta->CodigoEmpresa = $request->codEmpresa;
         $cuenta->CodigoEntidadBancaria = $request->codEntidad;
@@ -53,6 +54,7 @@ inner join entidadfinanciera ef on ef.codigo = cb.codigoEntidadFinanciera
     
     public function actualizar(Request $request, $id)
     {
+
         $cuenta = CuentaBancaria::findOrFail($id);
         $cuenta->CodigoEmpresa = $request->codEmpresa;
         $cuenta->CodigoEntidadBancaria = $request->codEntidad;
