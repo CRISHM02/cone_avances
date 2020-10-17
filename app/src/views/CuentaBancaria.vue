@@ -14,7 +14,7 @@
             <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
-      <v-col cols="10">
+      <v-col cols="8">
         <h2 class="font-weight-bold text-center">Cuentas Bancarias</h2>
       </v-col>
     </v-row>
@@ -27,40 +27,51 @@
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-select
                     v-model="codEntidad"
                     :items="entidades"
                     :rules="[fieldRules.required]"
                     label="Entidad Bancaria"
+                    hint="*Campo requerido"
+                  persistent-hint
                 ></v-select>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-text-field v-model="nombre" label="Nombre"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="5">
-                <v-text-field v-model="numCuenta" :rules="[fieldRules.required,fieldRules.validarCuenta]" label="Número Cuenta" required></v-text-field>
+              <v-col cols="6">
+                <v-text-field
+                 v-model="numCuenta" 
+                 hint="*Campo requerido"
+                  persistent-hint 
+                  :rules="[fieldRules.required,fieldRules.validarCuenta]"                   
+                  label="Número Cuenta" 
+                  v-mask="mask"
+                  required></v-text-field>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-text-field
                   v-model="cci"
                   :rules="[fieldRules.required,fieldRules.validarCCI]"
+                   v-mask="mask"
+                  return-masked-value
+                  hint="*Campo requerido"
+                  persistent-hint
                   label="CCI"
                   required
                 ></v-text-field>
               </v-col>
             </v-row>
-            
+                        
             <v-row>
               <v-col cols="5">
                 <v-select
                     v-model="tipoMoneda"
+                    hint="*Campo requerido"
+                  persistent-hint
                     :items="monedas"
                     :rules="[fieldRules.required]"
                     label="Moneda"
@@ -100,12 +111,14 @@ import { get, post, put, patch } from "../api/api";
 import { Toast } from "../plugins/toast";
 import Swal from "sweetalert2";
 
+
 export default {
   components: {
     EntityTable: () => import("../components/EntityTable"),
   },
   data() {
     return {
+      mask: '####################',
       edit: false,
       valid: true,
       saveLoading: false,
@@ -114,6 +127,7 @@ export default {
         required: (v) => !!v || "Campo requerido",
         validarCCI : (v) => v.length == 20 || "CCI incorrecto",
         validarCuenta: (v) => v.length > 10 && v.length < 16 || "Cuenta Incorrecta",
+        soloNumeros : (v) => /^([0-9])*$/.test(v) || "Solo Valor Numerico"
 
       },
       headers: [

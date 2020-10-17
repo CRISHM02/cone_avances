@@ -30,14 +30,34 @@
           
         >
           <template v-if="withOptions" v-slot:[`item.actions`]="{ item }">
-            <v-icon
+            <v-tooltip bottom
+              v-for="option in options"
+              :key="option.name + item[headers[0].value]"
+              class="mr-2"              
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  :color = "item.Vigencia == 0 ? 'red darken-2' : 'green darken-2'"
+              @click="option.function(item)"
+                  >
+                  {{ option.name == "InHabilitar" ? item.Vigencia == 0 ?  "mdi-checkbox-marked-circle-outline": "mdi-close-circle-outline" : option.icon }}
+                </v-icon>
+              </template>
+              <span>{{option.name != "Editar" ? item.Vigencia == 0 ? "Habilitar" : "Inhabilitar" : option.name }}</span>
+            </v-tooltip>
+            <!--<v-icon
               v-for="option in options"
               :key="option.name + item[headers[0].value]"
               class="mr-2"
               :color = "item.Vigencia == 0 ? 'red darken-2' : 'green darken-2'"
               @click="option.function(item)"
-              >{{ option.name == "InHabilitar" ? item.Vigencia == 0 ?  "mdi-checkbox-marked-circle-outline": "mdi-close-circle-outline" : option.icon }}</v-icon
-            >
+              >
+                {{ option.name == "InHabilitar" ? item.Vigencia == 0 ?  "mdi-checkbox-marked-circle-outline": "mdi-close-circle-outline" : option.icon }}
+              </v-icon
+            >-->
           </template>
         </v-data-table>
       </v-card>
