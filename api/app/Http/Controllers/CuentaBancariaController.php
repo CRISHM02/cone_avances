@@ -38,6 +38,17 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
      */
     public function registrar(Request $request)
     {
+        $validacion = Validator::make($request->all(), [
+            'NummeroCuenta' => 'required|unique:CuentaBancaria|max:16',
+            'CCI' => 'required|unique:CuentaBancaria|max:21',
+        ], [
+            'unique' => ':attribute ya se encuentra registrado',
+            'required' => ':attribute es obligatorio',
+            'max' => ':attribute llego al limite de letras'
+        ]);
+        if ($validacion->fails()) {
+            return response()->json($validacion->errors()->first(), 400);
+        }
 
         $cuenta =  new CuentaBancaria();
         $cuenta->CodigoEmpresa = $request->codEmpresa;
@@ -54,6 +65,15 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
     
     public function actualizar(Request $request, $id)
     {
+
+        $validacion = Validator::make($request->all(), [
+            'CCI' => 'required|max:21',
+            'NumeroCuenta' => 'required|max:16',
+            'Nombre' => 'max:20',
+        ]);
+        if ($validacion->fails()) {
+            return response()->json($validacion, 400);
+        }
 
         $cuenta = CuentaBancaria::findOrFail($id);
         $cuenta->CodigoEmpresa = $request->codEmpresa;

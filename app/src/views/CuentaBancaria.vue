@@ -32,7 +32,7 @@
                     v-model="codEntidad"
                     :items="entidades"
                     :rules="[fieldRules.required]"
-                    label="Entidad Bancaria"
+                    label="Entidad Bancaria*"
                     hint="*Campo requerido"
                   persistent-hint
                 ></v-select>
@@ -48,7 +48,7 @@
                  hint="*Campo requerido"
                   persistent-hint 
                   :rules="[fieldRules.required,fieldRules.validarCuenta]"                   
-                  label="Número Cuenta" 
+                  label="Número Cuenta*" 
                   v-mask="mask"
                   required></v-text-field>
               </v-col>
@@ -60,7 +60,7 @@
                   return-masked-value
                   hint="*Campo requerido"
                   persistent-hint
-                  label="CCI"
+                  label="CCI*"
                   required
                 ></v-text-field>
               </v-col>
@@ -74,7 +74,7 @@
                   persistent-hint
                     :items="monedas"
                     :rules="[fieldRules.required]"
-                    label="Moneda"
+                    label="Moneda*"
                 ></v-select>
               </v-col>
             </v-row>
