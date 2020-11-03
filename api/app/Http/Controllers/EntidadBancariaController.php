@@ -16,7 +16,9 @@ class EntidadBancariaController extends Controller
    public function listarVigentes()
    {
 
-       $entidades = EntidadBancaria::select('Codigo','RazonSocial','Siglas')->where('Vigencia','=',1)->get();
+       $entidades = EntidadBancaria::select('Codigo','RazonSocial','Siglas')->where('Vigencia','=',1)
+                    ->orderBy('Siglas','ASC')
+                    ->get();
 
        return response()->json($entidades,202);
    }

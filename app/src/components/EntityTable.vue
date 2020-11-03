@@ -40,7 +40,7 @@
                   v-bind="attrs"
                   v-on="on"
                   class="mr-2"
-                  :color = "item.Vigencia == 0 ? 'red darken-2' : 'green darken-2'"
+                  :color = "option.name!= 'Editar' && item.Vigencia == 0 ? 'red darken-2' : 'green darken-2'"
               @click="option.function(item)"
                   >
                   {{ option.name == "InHabilitar" ? item.Vigencia == 0 ?  "mdi-checkbox-marked-circle-outline": "mdi-close-circle-outline" : option.icon }}

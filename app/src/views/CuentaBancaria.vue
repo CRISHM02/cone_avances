@@ -28,6 +28,9 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
               <v-col cols="6">
+                <v-text-field v-model="nombre" label="Nombre"></v-text-field>
+              </v-col>
+              <v-col cols="6">
                 <v-select
                     v-model="codEntidad"
                     :items="entidades"
@@ -37,9 +40,7 @@
                   persistent-hint
                 ></v-select>
               </v-col>
-              <v-col cols="6">
-                <v-text-field v-model="nombre" label="Nombre"></v-text-field>
-              </v-col>
+              
             </v-row>
             <v-row>
               <v-col cols="6">
@@ -108,7 +109,7 @@
 
 <script>
 import { get, post, put, patch } from "../api/api";
-import { Toast } from "../plugins/toast";
+
 import Swal from "sweetalert2";
 
 
@@ -203,7 +204,7 @@ export default {
         codEmpresa: 1,
         codEntidad: this.codEntidad,
         cci: this.cci,
-        numCuenta: this.numCuenta,
+        NumeroCuenta: this.numCuenta,
         tipoMoneda: this.tipoMoneda,
         nombre: this.nombre,
       };
@@ -224,10 +225,11 @@ export default {
           this.saveLoading = false;
           this.dialog = false;
           this.$refs.cuentasTable.fetchData();
+          this.reset();
           this.limpiar();
         })
         .catch(() => {
-          Toast.fire("No se registró cuenta bancaria ", "", "error");
+          Swal.fire("No se registró cuenta bancaria ", "", "error");
           this.saveLoading = false;
         });
     },
@@ -248,10 +250,11 @@ export default {
           this.CodigoEdit = null;
           this.dialog = false;
           this.$refs.cuentasTable.fetchData();
+          this.reset();
           this.limpiar();
         })
         .catch(() => {
-          Toast.fire("No se actualizó la cuenta bancaria", "", "error");
+          Swal.fire("No se actualizó la cuenta bancaria", "", "error");
           this.saveLoading = false;
         });
     },

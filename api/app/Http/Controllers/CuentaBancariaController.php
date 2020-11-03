@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\CuentaBancaria;
 use DB;
@@ -24,6 +25,7 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
         */
         $cuentas = DB::table('cuentabancaria as cb')->select('cb.Codigo','ef.Siglas','cb.CCI','cb.NumeroCuenta','cb.CodigoEntidadBancaria','cb.TipoMoneda','cb.Nombre','cb.Vigencia')
                                     ->join('entidadBancaria as ef','ef.Codigo','=','cb.CodigoEntidadBancaria')
+                                    ->orderBy('cb.Nombre','ASC')
                                     ->get();
         return response()->json($cuentas);
     }
@@ -38,13 +40,14 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
      */
     public function registrar(Request $request)
     {
+        //var_dump($request->all());
         $validacion = Validator::make($request->all(), [
-            'NummeroCuenta' => 'required|unique:CuentaBancaria|max:16',
-            'CCI' => 'required|unique:CuentaBancaria|max:21',
+            'NumeroCuenta' => 'required|unique:CuentaBancaria|max:16',
+            'cci' => 'required|unique:CuentaBancaria|max:21',
         ], [
             'unique' => ':attribute ya se encuentra registrado',
             'required' => ':attribute es obligatorio',
-            'max' => ':attribute llego al limite de letras'
+            'maxLength' => ':attribute llego al limite de letras'
         ]);
         if ($validacion->fails()) {
             return response()->json($validacion->errors()->first(), 400);
@@ -54,7 +57,7 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
         $cuenta->CodigoEmpresa = $request->codEmpresa;
         $cuenta->CodigoEntidadBancaria = $request->codEntidad;
         $cuenta->CCI = $request->cci;
-        $cuenta->NumeroCuenta = $request->numCuenta;
+        $cuenta->NumeroCuenta = $request->NumeroCuenta;
         $cuenta->TipoMoneda = $request->tipoMoneda;
         $cuenta->Nombre = $request->nombre;
         $cuenta->save();
@@ -67,9 +70,9 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
     {
 
         $validacion = Validator::make($request->all(), [
-            'CCI' => 'required|max:21',
+            'cci' => 'required|max:21',
             'NumeroCuenta' => 'required|max:16',
-            'Nombre' => 'max:20',
+            'nombre' => 'max:20',
         ]);
         if ($validacion->fails()) {
             return response()->json($validacion, 400);
@@ -79,7 +82,7 @@ inner join entidadbancaria ef on ef.codigo = cb.codigoEntidadBancaria
         $cuenta->CodigoEmpresa = $request->codEmpresa;
         $cuenta->CodigoEntidadBancaria = $request->codEntidad;
         $cuenta->CCI = $request->cci;
-        $cuenta->NumeroCuenta = $request->numCuenta;
+        $cuenta->NumeroCuenta = $request->NumeroCuenta;
         $cuenta->TipoMoneda = $request->tipoMoneda;
         $cuenta->Nombre = $request->nombre;
         $cuenta->save();
